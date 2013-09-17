@@ -67,9 +67,23 @@ end
 
 get '/incoming/call' do
   response = Twilio::TwiML::Response.new do |r|
-    r.Say 'I just responded to a phone call. Huzzah!', :voice => 'woman'
+    r.Say 'Please enter either one or two and press pound', :voice => 'woman'
+    r.Gather :action => '/incoming/call/gather/#{Digits}'
   end
 
   content_type 'text/xml'
   response.text
+end
+
+post '/incoming/call/gather/:digits' do
+  response = Twilio::TwiML::Response.new do |r|
+    if params[:digits] == 1
+      r.Say 'Dude, why would you pick one?', :voice => 'woman'
+    else
+      r.Say 'Dude, why would you press two?', :voice => 'woman'
+    end
+
+    context_type 'text/xml'
+    response.text
+  end
 end
