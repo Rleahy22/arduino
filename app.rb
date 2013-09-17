@@ -91,10 +91,5 @@ post '/incoming/call/gather' do
 end
 
 post '/incoming/call/recording' do
-  response = Twilio::TwiML::Response.new do |r|
-    r.play params[:RecordingUrl]
-  end
-
-  content_type :xml
-  response.text
+  @recording_url = params[:RecordingUrl]
 end
