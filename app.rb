@@ -82,6 +82,7 @@ post '/incoming/call/gather' do
     elsif params[:Digits] == "2"
       client.account.recordings.list.each do |recording|
         r.Play recording.duration
+      end
     else
       r.Dial '8168612021'
     end
