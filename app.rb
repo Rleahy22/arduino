@@ -77,11 +77,11 @@ end
 
 post '/incoming/call/gather' do
   response = Twilio::TwiML::Response.new do |r|
-    if params[:Digits] == "1"
+    # if params[:Digits] == "1"
       r.Say 'Dude, why would you pick one?', :voice => 'woman'
-    else
-      r.Say 'Dude, why would you press two?', :voice => 'woman'
-    end
+    # else
+    #   r.Say 'Dude, why would you press two?', :voice => 'woman'
+    # end
 
     content_type :xml
     response.text
