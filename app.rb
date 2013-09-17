@@ -80,7 +80,7 @@ post '/incoming/call/gather' do
     if params[:Digits] == "1"
       r.Say 'Dude, why would you pick one', :voice => 'woman'
     elsif params[:Digits] == "2"
-      r.Dial '+18158612021'
+      r.Dial '8158612021'
     else
       r.Say 'Dude, why would you press two', :voice => 'woman'
     end
