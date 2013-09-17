@@ -59,6 +59,7 @@ end
 get '/incoming/sms' do
   response = Twilio::TwiML::Response.new do |r|
     r.Say 'I just responded to a text message. Huzzah!'
+  end
 end
 
 get '/incoming/call' do
