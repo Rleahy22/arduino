@@ -80,7 +80,7 @@ post '/incoming/call/gather' do
     if params[:Digits] == "1"
       r.Record :action => '/incoming/call/recording'
     elsif params[:Digits] == "2"
-      client.account.recordings.list.each do |recording|
+      recording = client.account.recording.list.last
         r.Play recording.duration
       end
     else
