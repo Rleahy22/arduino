@@ -61,12 +61,12 @@ get '/incoming/sms' do
     if session[:state] == nil
       session[:correct] = 0
       r.Sms 'What walks on 4 legs in the morning, 2 legs during the day,
-            and 3 legs at night?', :action => '/incoming/sms/riddle/1'
+            and 3 legs at night?', :action => '/incoming/sms/riddle'
     elsif session[:state] == 1
-      r.Sms 'What is black and white and red all over?', :action => '/incoming/sms/riddle/2'
+      r.Sms 'What is black and white and red all over?', :action => '/incoming/sms/riddle'
     elsif session[:state] == 2
       r.Sms 'What is the answer to life, the universe, 
-            and everyhting else?', :action => '/incoming/sms/riddle/3'
+            and everyhting else?', :action => '/incoming/sms/riddle'
     else
       r.Sms "#{session[:correct]}/3"
     end 
@@ -78,7 +78,7 @@ end
 
 post '/incoming/sms/riddle/:question' do
   response = Twilio::TwiML::Response.new do |r|
-    if params[:question] == 1
+    if session[:state] == nil
       session[:state] = 1
       if params[:Body].upcase == 'A HUMAN'
         session[:correct] += 1
@@ -86,7 +86,7 @@ post '/incoming/sms/riddle/:question' do
       else
         r.Sms "Mama's wrong again"
       end
-    elsif params[:question] == 2
+    elsif session[:state] == 1
       session[:state] = 2
       if params[:Body].upcase == "A PENGUIN WITH A SUNTAN"
         session[:correct] += 1
