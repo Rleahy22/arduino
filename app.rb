@@ -81,7 +81,7 @@ post '/incoming/call/gather' do
       r.Record :action => '/incoming/call/recording'
     elsif params[:Digits] == "2"
       client.account.recordings.list.each do |recording|
-        r.Play recording.duration
+        r.Play recording.recording_url
       end
     else
       r.Dial '8168612021'
@@ -96,6 +96,7 @@ post '/incoming/call/recording' do
   @recording_url = params[:RecordingUrl]
   response = Twilio::TwiML::Response.new do |r|
     r.Say 'Thank you'
+    r.Redirect '/incoming/call'
   end
 
   content_type :xml
