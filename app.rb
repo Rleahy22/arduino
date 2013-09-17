@@ -67,7 +67,7 @@ end
 
 get '/incoming/call' do
   response = Twilio::TwiML::Response.new do |r|
-    r.Say 'Please enter either one or two and press pound', :voice => 'woman'
+    r.Say 'Press one to record a message and press two to play back last message', :voice => 'woman'
     r.Gather :action => '/incoming/call/gather'
   end
 
@@ -78,14 +78,18 @@ end
 post '/incoming/call/gather' do
   response = Twilio::TwiML::Response.new do |r|
     if params[:Digits] == "1"
-      r.Say 'Dude, why would you pick one', :voice => 'woman'
-    elsif params[:Digits] == "0"
-      r.Dial '8158612021'
+      r.Record :action => 'incoming/call/recording'
+    elsif params[:Digits] == "2"
+      r.Play @recording_url
     else
-      r.Say 'Dude, why would you press two', :voice => 'woman'
+      r.Dial '8168612021'
     end
   end
 
   content_type :xml
   response.text
+end
+
+post '/incoming/call/recording' do
+  @recording_url = params[:RecordingUrl]
 end
