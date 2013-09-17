@@ -78,7 +78,7 @@ end
 post '/incoming/call/gather' do
   response = Twilio::TwiML::Response.new do |r|
     if params[:Digits] == "1"
-      r.Record :action => 'incoming/call/recording'
+      r.Record :action => '/incoming/call/recording'
     elsif params[:Digits] == "2"
       r.Play @recording_url
     else
