@@ -81,7 +81,7 @@ post '/incoming/call/gather' do
       r.Record :action => '/incoming/call/recording'
     elsif params[:Digits] == "2"
       client.account.recordings.list.each do |recording|
-        r.Play recording.recording_url
+        r.Play recording.uri
       end
     else
       r.Dial '8168612021'
