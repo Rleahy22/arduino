@@ -60,14 +60,14 @@ get '/incoming/sms' do
   response = Twilio::TwiML::Response.new do |r|
     if session[:state] == nil
       session[:correct] = 0
-      session[:state] = 1
+      session[:state] = '1'
       r.Sms "#{session[:state]} What walks on 4 legs in the morning, 2 legs during the day, and 3 legs at night?"
-    elsif session[:state] == 1
+    elsif session[:state] == '1'
       if params[:Body].upcase == 'A HUMAN'
         session[:correct] =+ 1
       end
       r.Sms 'What is black and white and red all over?'
-    elsif session[:state] == 2
+    elsif session[:state] == '2'
       if params[:Body] == 'A PENGUIN WITH A SUNTAN'
         session[:correct] =+ 1
       end
