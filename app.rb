@@ -52,7 +52,7 @@ get '/hello' do
   end
 
   # Render an XML (TwiML) document
-  content_type 'text/xml'
+  content_type :xml
   response.text
 end
 
@@ -61,7 +61,7 @@ get '/incoming/sms' do
     r.Sms 'I just responded to a text message. Huzzah!'
   end
 
-  content_type 'text/xml'
+  content_type :xml
   response.text
 end
 
@@ -71,7 +71,7 @@ get '/incoming/call' do
     r.Gather :action => '/incoming/call/gather/'
   end
 
-  content_type 'text/xml'
+  content_type :xml
   response.text
 end
 
@@ -83,7 +83,7 @@ post '/incoming/call/gather/' do
       r.Say 'Dude, why would you press two?', :voice => 'woman'
     end
 
-    context_type 'text/xml'
+    content_type :xml
     response.text
   end
 end
