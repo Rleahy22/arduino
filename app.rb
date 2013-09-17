@@ -68,7 +68,7 @@ end
 get '/incoming/call' do
   response = Twilio::TwiML::Response.new do |r|
     r.Say 'Please enter either one or two and press pound', :voice => 'woman'
-    r.Gather :action => '/incoming/call/gather/'
+    r.Gather :action => '/incoming/call/gather'
   end
 
   content_type :xml
