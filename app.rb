@@ -76,7 +76,7 @@ get '/incoming/sms' do
   response.text
 end
 
-post '/incoming/sms/riddle/:question' do
+post '/incoming/sms/riddle' do
   response = Twilio::TwiML::Response.new do |r|
     if session[:state] == nil
       session[:state] = 1
