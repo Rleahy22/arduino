@@ -61,8 +61,7 @@ get '/incoming/sms' do
     if session[:state] == nil
       session[:correct] = 0
       session[:state] = 1
-      r.Sms 'What walks on 4 legs in the morning, 2 legs during the day,
-            and 3 legs at night?'
+      r.Sms "#{session[:state]} What walks on 4 legs in the morning, 2 legs during the day, and 3 legs at night?"
     elsif session[:state] == 1
       if params[:Body].upcase == 'A HUMAN'
         session[:correct] =+ 1
