@@ -58,12 +58,18 @@ end
 
 get '/incoming/sms' do
   response = Twilio::TwiML::Response.new do |r|
-    r.Say 'I just responded to a text message. Huzzah!'
+    r.Sms 'I just responded to a text message. Huzzah!'
   end
+
+  content_type 'text/xml'
+  response.text
 end
 
 get '/incoming/call' do
   response = Twilio::TwiML::Response.new do |r|
     r.Say 'I just responded to a phone call. Huzzah!', :voice => 'woman'
   end
+
+  content_type 'text/xml'
+  response.text
 end
