@@ -58,7 +58,51 @@ end
 
 get '/incoming/sms' do
   response = Twilio::TwiML::Response.new do |r|
-    r.Sms 'I just responded to a text message. Huzzah!'
+    if session[:state] == nil
+      session[:correct] = 0
+      r.Sms 'What walks on 4 legs in the morning, 2 legs during the day,
+            and 3 legs at night?', :action => '/incoming/sms/riddle/1'
+    elsif session[:state] == 1
+      r.Sms 'What is black and white and red all over?', :action => '/incoming/sms/riddle/2'
+    elsif session[:state] == 2
+      r.Sms 'What is the answer to life, the universe, 
+            and everyhting else?', :action => '/incoming/sms/riddle/3'
+    else
+      r.Sms "#{session[:correct]}/3"
+    end 
+  end
+
+  content_type :xml
+  response.text
+end
+
+post '/incoming/sms/riddle/:question' do
+  response = Twilio::TwiML::Response.new do |r|
+    if params[:question] == 1
+      session[:state] = 1
+      if params[:Body].upcase == 'A HUMAN'
+        session[:correct] += 1
+        r.Sms 'Correct!'
+      else
+        r.Sms "Mama's wrong again"
+      end
+    elsif params[:question] == 2
+      session[:state] = 2
+      if params[:Body].upcase == "A PENGUIN WITH A SUNTAN"
+        session[:correct] += 1
+        r.Sms 'Correct!'
+      else
+        r.Sms "Mama's wrong again"
+      end
+    else
+      session[:state] = nil
+      if params[:body] == '42'
+        session[:correct] += 1
+        r.Sms "Correct!, you got #{session[:correct]}/3"
+      else
+        r.Sms "Mama's wrong again, you got #{session[:correct]}/3"
+      end
+    end
   end
 
   content_type :xml
